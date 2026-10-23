@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyCalendar</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>">
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:#eef2ff;
+    font-family:'Segoe UI',Tahoma,sans-serif}
+  /* ฉากโหลดระหว่างรอ iframe พร้อม */
+  #splash{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:16px;color:#4f46e5;
+    background:linear-gradient(120deg,#eef2ff,#ecfeff);transition:opacity .5s}
+  #splash.hide{opacity:0;pointer-events:none}
+  #splash .logo{font-size:54px}
+  #splash .t{font-weight:600;font-size:1.1rem}
+  #splash .spin{width:34px;height:34px;border:4px solid #c7d2fe;border-top-color:#4f46e5;
+    border-radius:50%;animation:sp 1s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  iframe{position:fixed;inset:0;border:0;width:100%;height:100%;display:block}
+</style>
+</head>
+<body>
+  <div id="splash">
+    <div class="logo">💧</div>
+    <div class="spin"></div>
+    <div class="t">กำลังเปิด MyCalendar...</div>
+  </div>
+
+  <!-- ============================================================
+       👇 วางลิงก์ Web App ของคุณที่ลงท้ายด้วย /exec ตรงนี้
+       (จาก Apps Script: Deploy > Manage deployments > คัดลอก Web app URL)
+       ============================================================ -->
+  <iframe
+    id="app"
+    src="https://script.google.com/macros/s/AKfycbwAVbW93TuLAOH-mD9gHrxfR6ClwFZla0-TdVdvV-RxMWun2e1NqQ3QGCjIe_QDT9nNmw/exec"
+    allow="clipboard-read; clipboard-write; fullscreen; geolocation"
+    referrerpolicy="no-referrer">
+  </iframe>
+
+  <script>
+    // ซ่อนฉากโหลดเมื่อ iframe โหลดเสร็จ (หรืออย่างช้าใน 6 วินาที)
+    var frame = document.getElementById('app');
+    function hideSplash(){ document.getElementById('splash').classList.add('hide'); }
+    frame.addEventListener('load', hideSplash);
+    setTimeout(hideSplash, 6000);
+  </script>
+</body>
+</html>
